@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    
+<nav class="navbar p-4 navbar-expand-lg">
+  <div class="container">
+    <div class="d-flex align-items-center">
+      <img src="kerri/imgi_1_logo.png" alt="Weather logo" />
+      <div class="ms-3">
+        <h1 class="fs-5 text-white mb-0">Weather</h1>
+        <small class="text-white-50">Tagline goes here</small>
+      </div>
+    </div>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 py-2 mb-lg-0 gap-lg-5 gap-3">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">News</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Live cameras</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">photos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="home pt-5" id="home">
+  <div class="container">
+        <div class="input-group">
+          <input
+            class="mb-2 mb-sm-0"
+            type="text"
+            id="cityInput"
+            placeholder="Find your Location"
+          />
+          <button id="findBtn">Find</button>
+        </div>
+      </div>
+</section>
+
+<!-- ✅ Cards with IDs added for JS targeting -->
+<section>
+  <div class="container my-5">
+    <div class="row g-4 justify-content-center">
+      <div class="col-12 col-md-4">
+        <div id="card-day-1" class="weather-card p-4 h-100 rounded-4">
+          <div class="d-flex justify-content-between text-white-50 mb-2">
+            <span class="day-name">Tuesday</span>
+            <span class="day-date">1 July</span>
+          </div>
+          <h5 class="text-white mb-2 location-name">Alpine – Casparis Municipal Airport</h5>
+          <h1 class="display-4 fw-bold text-white temp-now">18.2ºC</h1>
+          <img src="https://cdn-icons-png.flaticon.com/512/1163/1163624.png" width="60" alt="cloud" />
+          <p class="text-info mt-2 condition-text">Overcast</p>
+          <div class="weather-stats d-flex justify-content-around text-white-50 mt-3 small">
+            <span><i class="fas fa-tint me-1"></i>20%</span>
+            <span><i class="fas fa-wind me-1"></i>18km/h</span>
+            <span><i class="fas fa-compass me-1"></i>East</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div id="card-day-2" class="weather-card p-4 h-100 rounded-4 text-center">
+          <div class="text-white-50 mb-2 day-name">Wednesday</div>
+          <img src="https://cdn-icons-png.flaticon.com/512/1163/1163624.png" width="50" alt="cloud" />
+          <h4 class="fw-bold text-white mt-3 mb-0 temp-now">27.5ºC</h4>
+          <p class="text-white-50 mb-1 temp-low">14.5º</p>
+          <p class="text-info mb-0 condition-text">Overcast</p>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div id="card-day-3" class="weather-card p-4 h-100 rounded-4 text-center">
+          <div class="text-white-50 mb-2 day-name">Thursday</div>
+          <img src="https://cdn-icons-png.flaticon.com/512/1163/1163657.png" width="50" alt="partly rainy" />
+          <h4 class="fw-bold text-white mt-3 mb-0 temp-now">23.4ºC</h4>
+          <p class="text-white-50 mb-1 temp-low">16.4º</p>
+          <p class="text-info mb-0 condition-text">Patchy rain nearby</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer pt-5">
+  <div class="container">
+    <div class="row align-items-center justify-content-between gy-4 text-center text-md-start">
+      <div class="col-12 col-md-6">
+        <div class="subscribe-section d-flex flex-column flex-sm-row justify-content-center justify-content-md-start align-items-center">
+          <input
+            type="email"
+            class="subscribe-input mb-2 mb-sm-0"
+            placeholder="Enter your email to subscribe..."
+          />
+          <button class="subscribe-button">Subscribe</button>
+        </div>
+        <div class="copyright">
+          &copy; 2014 Company name. Designed by Themex. All rights reserved
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="social-icons d-flex justify-content-center justify-content-md-end gap-3">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Google+"><i class="fab fa-google-plus-g"></i></a>
+          <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ✅ احرص تحط ملف الجافا سكريبت تحت هنا -->
+<script src="main.js"></script>
+</body>
+</html>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

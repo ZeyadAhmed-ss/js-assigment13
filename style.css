@@ -1,0 +1,151 @@
+body {
+    background-color: #1e202b;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: #1E202B;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.nav-link {
+    color: #fff;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #1e90ff;
+    border: 1px solid #1e90ff;
+    background-color: rgba(30, 144, 255, 0.2);
+}
+
+.home {
+    background-image: url(kerri/imgi_6_banner.png);
+    background-position: center;
+    background-size: cover;
+    min-height: 36.8vh;
+}
+
+.input-group {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    padding: 10px 15px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    width: 500px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    outline: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+input::placeholder {
+    color: #ddd;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #1e90ff;
+    ;
+    color: #ffffff;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.weather-card {
+    background-color: #2e303b;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.weather-card:hover {
+    transform: translateY(-5px);
+}
+
+.weather-cards img {
+    display: block;
+    margin: auto;
+}
+
+
+
+
+
+.footer {
+    background-color: #262936;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    font-family: Arial, sans-serif;
+}
+
+.subscribe-section {
+    margin-bottom: 15px;
+}
+
+.subscribe-input {
+    padding: 10px 15px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    width: 500px;
+    background-color: #1E202B;
+    color: #fff;
+    outline: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.subscribe-input::placeholder {
+    color: #ccc;
+}
+
+.subscribe-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #00aaff;
+    color: #fff;
+    border: none;
+    border-radius: 0 20px 20px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.subscribe-button:hover {
+    background-color: #0091cc;
+}
+
+.social-icons a {
+    margin: 0 10px;
+    color: #fff;
+    font-size: 1.5em;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #00aaff;
+}
+
+.copyright {
+    font-size: 0.9em;
+    color: #999;
+    margin-top: 10px;
+}
