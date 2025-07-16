@@ -1,112 +1,183 @@
-document.addEventListener('DOMContentLoaded', () => {
-    let selectedCity = null;
-    const apiKey = '149f7a9a2ac54271844135747250107';
-    const cityInput = document.getElementById('cityInput');
-    const findButton = document.getElementById('findBtn'); 
-    if (!cityInput) console.error('City input field not found');
-    if (!findButton) console.error('Find button not found');
+// Class games by category
+class Game {
+  static async fetchGames(category = "") {
+    const url = `https://free-to-play-games-database.p.rapidapi.com/api/games?category=${category}`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'x-rapidapi-key': '398941905emsh1efa1d855ecd3a5p1520bcjsn50175ce80e09',
+        'x-rapidapi-host': 'free-to-play-games-database.p.rapidapi.com'
+      }
+    };
 
-    async function searchCities(query) {
-        const url = `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${encodeURIComponent(query)}`;
-
-        try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`Network error: ${response.status}`);
-            const cities = await response.json();
-            if (cities.length > 0) selectedCity = cities[0].name;
-            else selectedCity = null;
-            return cities;
-        } catch (error) {
-            console.error('Error searching cities:', error);
-            return [];
-        }
+    try {
+      const response = await fetch(url, options);
+      const result = await response.json();
+      UI.displayGames(result);
+    } catch (error) {
+      console.error(error);
     }
+  }
+}
 
-    async function getWeatherForecast(cityName) {
-        const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${encodeURIComponent(cityName)}&days=3&aqi=no&alerts=no`;
+// class games by id 
+class Id {
+  static async fetchGameById(id) {
+    const url = `https://free-to-play-games-database.p.rapidapi.com/api/game?id=${id}`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'x-rapidapi-key': '398941905emsh1efa1d855ecd3a5p1520bcjsn50175ce80e09',
+        'x-rapidapi-host': 'free-to-play-games-database.p.rapidapi.com'
+      }
+    };
 
-        try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`Network error: ${response.status}`);
-            const data = await response.json();
-            if (data.error) throw new Error(data.error.message);
-            return data;
-        } catch (error) {
-            console.error('Error fetching weather data:', error);
-            alert(`Failed to fetch weather data: ${error.message}`);
-            return null;
-        }
+    try {
+      const response = await fetch(url, options);
+      const game = await response.json();
+      UI.displayGameDetails(game);
+    } catch (error) {
+      console.error(error);
     }
+  }
+}
 
-    function updateWeatherCards(data) {
-        if (!data) return;
-
-        const forecastDays = data.forecast.forecastday;
-
-        const card1 = document.getElementById("card-day-1");
-        const card2 = document.getElementById("card-day-2");
-        const card3 = document.getElementById("card-day-3");
-
-        if (card1) {
-            card1.querySelector('.location-name').textContent = `${data.location.name} – ${data.location.region || 'N/A'}`;
-            card1.querySelector('.temp-now').textContent = `${forecastDays[0].day.avgtemp_c}ºC`;
-            card1.querySelector('img').src = `https:${forecastDays[0].day.condition.icon}`;
-            card1.querySelector('.condition-text').textContent = forecastDays[0].day.condition.text;
-            const stats = card1.querySelectorAll('.weather-stats span');
-            stats[0].textContent = `${forecastDays[0].day.avghumidity}%`;
-            stats[1].textContent = `${forecastDays[0].day.maxwind_kph}km/h`;
-            stats[2].textContent = forecastDays[0].day.wind_dir;
-        }
-
-        if (card2) {
-            card2.querySelector('.temp-now').textContent = `${forecastDays[1].day.avgtemp_c}ºC`;
-            card2.querySelector('.temp-low').textContent = `${forecastDays[1].day.mintemp_c}º`;
-            card2.querySelector('img').src = `https:${forecastDays[1].day.condition.icon}`;
-            card2.querySelector('.condition-text').textContent = forecastDays[1].day.condition.text;
-        }
-
-        if (card3) {
-            card3.querySelector('.temp-now').textContent = `${forecastDays[2].day.avgtemp_c}ºC`;
-            card3.querySelector('.temp-low').textContent = `${forecastDays[2].day.mintemp_c}º`;
-            card3.querySelector('img').src = `https:${forecastDays[2].day.condition.icon}`;
-            card3.querySelector('.condition-text').textContent = forecastDays[2].day.condition.text;
-        }
+// Class to handle UI rendering
+class UI {
+  static displayGames(games) {
+    let cartoona = "";
+    for (let i = 0; i < games.length; i++) {
+      cartoona += `
+        <div class="col-md-4 col-lg-3">
+          <div class="game-card bg-dark text-white rounded-4 overflow-hidden" data-id="${games[i].id}">
+            <img class="w-100" src="${games[i].thumbnail}" alt="${games[i].title}">
+            <div class="p-3 d-flex justify-content-between align-items-center">
+              <h5 class="mb-0 fs-6">${games[i].title}</h5>
+              <span class="badge bg-primary text-white">Free</span>
+            </div>
+            <div class="px-4 small mb-3" style="opacity: 0.6">
+              ${games[i].short_description}
+            </div>
+            <div class="px-3 pb-3 d-flex justify-content-between">
+              <span class="badge bg-secondary">${games[i].genre}</span>
+              <span class="badge bg-secondary">${games[i].platform}</span>
+            </div>
+          </div>
+        </div>
+      `;
     }
+    if (!games || games.length === 0) {
+  document.getElementById("row").innerHTML = `<p class="text-white text-center">No games found.</p>`;
+  return;
+}
 
-    async function handleSearch() {
-        if (!selectedCity) {
-            alert("Please enter a valid city.");
-            return;
-        }
+    document.getElementById("row").innerHTML = cartoona;
 
-        const data = await getWeatherForecast(selectedCity);
-        updateWeatherCards(data);
-    }
+    document.querySelectorAll(".game-card").forEach(card => {
+      card.addEventListener("click", () => {
+        const id = card.dataset.id;
+        Id.fetchGameById(id);
+      });
+    });
+  }
 
-    cityInput.addEventListener('input', async function (e) {
-        const query = e.target.value.trim();
-        if (query.length < 3) {
-            selectedCity = null;
-            return;
-        }
+  static displayGameDetails(game) {
+    const container = document.querySelector(".GameDetailsContainer");
+    container.classList.remove("d-none");
+    document.getElementById("Gamecontainer").classList.add("d-none");
 
-        const cities = await searchCities(query);
-        if (cities.length > 0) {
-            selectedCity = cities[0].name;
-        } else {
-            selectedCity = null;
-        }
+    container.innerHTML = `
+      <div class="row pb-5">
+        <div class="col-md-4">
+          <img class="w-100 rounded" src="${game.thumbnail}" alt="${game.title}">
+          <h3 class="mt-3">${game.title}</h3>
+        </div>
+        <div class="col-md-8">
+          <h3>Description</h3>
+          <p>${game.description}</p>
+
+          <h3 class="mt-4">Publisher</h3>
+          <h5>${game.publisher}</h5>
+
+          <h3 class="mt-4">Release Date</h3>
+          <h5>${game.release_date}</h5>
+
+          <h3 class="mt-4">Platform</h3>
+          <h5>${game.platform}</h5>
+
+          <button class="my-custom-btn btn-outline-light mt-4" id="backBtn">Back</button>
+          <button class="my-custom-btn mt-4 ms-3" id="showGameBtn">Show Game</button>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("backBtn").addEventListener("click", () => {
+      container.classList.add("d-none");
+      document.getElementById("Gamecontainer").classList.remove("d-none");
     });
 
-    cityInput.addEventListener('keypress', async function (e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            await handleSearch();
-        }
+    document.getElementById("showGameBtn").addEventListener("click", () => {
+      window.open(game.game_url, "_blank");
     });
 
-    findButton.addEventListener('click', async function (e) {
+    
+
+    container.scrollIntoView({ behavior: "smooth" });
+  }
+
+  static setupCategoryListeners() {
+    const links = document.querySelectorAll(".nav-link");
+    links.forEach(link => {
+      link.addEventListener("click", e => {
+        const category = e.target.innerHTML.trim();
+        Game.fetchGames(category);
+      });
+    });
+
+    Game.fetchGames(links[0].innerHTML.trim());
+  }
+
+  static setupCategoryListeners() {
+    const links = document.querySelectorAll(".nav-link");
+
+    links.forEach(link => {
+      link.addEventListener("click", e => {
         e.preventDefault();
-        await handleSearch();
+
+        links.forEach(l => l.classList.remove("active"));
+
+        e.target.classList.add("active");
+
+        const category = e.target.textContent.trim().toLowerCase();
+
+      
+        Game.fetchGames(category);
+      });
     });
-});
+
+    if (links.length > 0) {
+      links[0].classList.add("active");
+      const firstCategory = links[0].textContent.trim().toLowerCase();
+      Game.fetchGames(firstCategory);
+    }
+  }
+}
+
+// Initialize
+UI.setupCategoryListeners();
+
+// smooth scroll
+const lenis = new Lenis({
+  duration: 1.2,     
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+  smooth: true,
+  smoothTouch: true,
+})
+function raf(time) {
+  lenis.raf(time)
+  requestAnimationFrame(raf)
+}
+
+
+
+requestAnimationFrame(raf)
